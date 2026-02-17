@@ -8,12 +8,12 @@ export const footerData = {
     },
     {
       name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/nishagoswamii/overlay/about-this-profile/',
+      url: 'https://www.linkedin.com/in/nishagoswamii',
       icon: 'Linkedin'
     },
     {
       name: 'Email',
-      url: 'nishagoswami369@gmail.com',
+      url: 'nnishagoswamii@gmail.com',
       icon: 'Mail'
     }
   ],

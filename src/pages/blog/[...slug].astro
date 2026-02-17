@@ -1,0 +1,79 @@
+
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { Navbar } from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { GridBackground } from '@/components/GridBackground';
+import GiscusComments from '@/components/GiscusComments';
+
+import { projects } from '@/data/portfolioData';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await post.render();
+
+const allPosts = (await getCollection('blog')).map(p => ({
+  title: p.data.title,
+  slug: p.slug
+}));
+
+const searchProjects = projects.map(p => ({
+  id: p.id,
+  title: p.title,
+  githubUrl: p.githubUrl
+}));
+---
+
+<Layout title={post.data.title}>
+    <GridBackground client:load />
+    <Navbar client:load posts={allPosts} projects={searchProjects} />
+
+	<main class="relative z-10 pt-32 pb-20 min-h-screen">
+        <article class="container mx-auto px-4 max-w-3xl">
+            <header class="mb-12 text-center">
+                 <div class="mb-4 flex items-center justify-center gap-2">
+                    <time datetime={post.data.pubDate.toISOString()} class="text-sm font-mono text-muted-foreground">
+                        {post.data.pubDate.toLocaleDateString('en-us', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })}
+                    </time>
+                    {post.data.tags && (
+                        <>
+                         <span class="text-muted-foreground">•</span>
+                         <div class="flex gap-2">
+                            {post.data.tags.map(tag => (
+                                <span class="text-xs font-mono bg-secondary/30 px-2 py-1 rounded text-secondary-foreground">{tag}</span>
+                            ))}
+                         </div>
+                        </>
+                    )}
+                 </div>
+                 
+                 <h1 class="text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight">{post.data.title}</h1>
+                 
+                 {post.data.heroImage && (
+                    <img width={1020} height={510} src={post.data.heroImage} alt="" class="rounded-xl shadow-2xl w-full object-cover aspect-video mb-12" />
+                 )}
+            </header>
+            
+            <div class="prose prose-lg dark:prose-invert prose-headings:font-heading prose-a:text-primary mx-auto">
+				<Content />
+			</div>
+            <div class="mt-16">
+                <GiscusComments client:load />
+            </div>
+        </article>
+	</main>
+    <Footer />
+</Layout>

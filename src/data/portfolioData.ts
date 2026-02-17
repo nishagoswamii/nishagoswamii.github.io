@@ -13,6 +13,7 @@ export interface Project {
     title: string;
     url: string;
   };
+  githubUrl?: string;
 }
 export const projects: Project[] = [
   {
@@ -20,8 +21,7 @@ export const projects: Project[] = [
     title: "Drowsiness Detection System",
     summary: "A real-time computer vision system to detect driver drowsiness using YOLO and PyTorch.",
     images: [
-      "/Images/Awake.jpg",
-      "/Images/Drowsy.jpg",
+      "/Images/DDS.png",
     ],
     tags: ["YOLO", "PyTorch", "Computer Vision", "Real-Time Detection", "AI"],
     details: {
@@ -32,25 +32,26 @@ export const projects: Project[] = [
         "Reduced reaction time to driver fatigue by providing immediate visual and audio alerts.",
         "Designed a modular architecture that can be integrated into vehicle infotainment or safety systems."
       ]
-    }
+    },
+    githubUrl: "https://github.com/nishagoswamii/drowsiness-detection"
   },
   {
-  id: 2,
-  title: "Celebrity Image Recognition",
-  summary: "A machine learning system that classifies celebrities based on scraped images using an ensemble of models.",
-  images: [
-    "/Images/example.jpg",
-    "/Images/dataset.jpg",
-  ],
-  tags: ["Python", "Web Scraping", "Ensemble Learning", "Flask", "Image Classification"],
-  details: {
-    challenge: "There was no lightweight and accurate way to recognize celebrity images via a web interface, especially using scraped data without huge datasets.",
-    solution: "Built a pipeline to scrape celebrity images via Google Images, processed them using OpenCV and NumPy, trained an ensemble of models—including XGBoost, Random Forest, LightGBM, and Logistic Regression—and deployed the classifier through a Flask-based web UI.",
-    impact: [
-      "Achieved reliable recognition across five popular personalities with limited dataset size (~900 images).",
-      "Delivered a responsive Flask app for real-time image classification via drag-and-drop interface.",
-      "Demonstrated how to combine web scraping, feature engineering, and ensemble learning into a cohesive, user-facing project."
-    ]
+    id: 2,
+    title: "Celebrity Image Recognition",
+    summary: "A machine learning system that classifies celebrities based on scraped images using an ensemble of models.",
+    images: [
+      "/Images/imageDetection.png"
+    ],
+    tags: ["Python", "Web Scraping", "Ensemble Learning", "Flask", "Image Classification"],
+    details: {
+      challenge: "There was no lightweight and accurate way to recognize celebrity images via a web interface, especially using scraped data without huge datasets.",
+      solution: "Built a pipeline to scrape celebrity images via Google Images, processed them using OpenCV and NumPy, trained an ensemble of models—including XGBoost, Random Forest, LightGBM, and Logistic Regression—and deployed the classifier through a Flask-based web UI.",
+      impact: [
+        "Achieved reliable recognition across five popular personalities with limited dataset size (~900 images).",
+        "Delivered a responsive Flask app for real-time image classification via drag-and-drop interface.",
+        "Demonstrated how to combine web scraping, feature engineering, and ensemble learning into a cohesive, user-facing project."
+      ]
+    },
+    githubUrl: "https://github.com/nishagoswamii/celebrity-classification"
   }
-}
 ];
