@@ -1,7 +1,7 @@
 ---
 title: "My Journey"
 description: "The struggle itself toward the heights is enough to fill a heart. One must imagine Sisyphus happy.-- Albert Camus "
-pubDate: "2026-02-18"
+pubDate: "2026-02-17"
 tags: ["Personal", "Life"]
 ---
 
@@ -19,16 +19,17 @@ Books are my closest companions. I’m fascinated not just by stories but by the
 
 My love for writing began in my early teens when my school teacher praised my work; that encouragement kept me writing, and it still does.
 
+And other than that I love pizza, coffee, music, movies, anime, books, adventure, mountains, beaches, flowers, chocolates and a lot more stuffs.
+
 Here, I quote something written by Albert Camus:
 
 “The struggle itself toward the heights is enough to fill a heart. One must imagine Sisyphus happy.”
 
 That line resonates with me. Becoming is not about arrival; it is about ascent. It is about choosing meaning, even in repetition.
 
-And other than that I love pizza, coffee, music, movies, books, adventure, mountains, beaches, flowers, and chocolates.
-
 The hardest question I still face is: Who am I?
 
 So here I am — unfiltered, unfinished, figuring it out in real time.
+
 Join me on this exciting journey of becoming me.
 

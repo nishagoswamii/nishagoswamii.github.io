@@ -8,6 +8,11 @@ import { GridBackground } from '@/components/GridBackground';
 import GiscusComments from '@/components/GiscusComments';
 
 import { projects } from '@/data/portfolioData';
+import ReviewGrid from '@/components/ReviewGrid';
+
+const reviews = await getCollection('reviews');
+const bookReviews = reviews.filter(r => r.data.type === 'book');
+const movieReviews = reviews.filter(r => r.data.type === 'movie');
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -70,9 +75,15 @@ const searchProjects = projects.map(p => ({
             <div class="prose prose-lg dark:prose-invert prose-headings:font-heading prose-a:text-primary mx-auto">
 				<Content />
 			</div>
-            <div class="mt-16">
                 <GiscusComments client:load />
             </div>
+
+            {post.slug === 'my-journey' && (
+                <div class="mt-20 space-y-12 border-t border-border pt-12">
+                     <ReviewGrid client:visible title="Books Shelf" reviews={bookReviews} />
+                     <ReviewGrid client:visible title="Movies & Shows" reviews={movieReviews} />
+                </div>
+            )}
         </article>
 	</main>
     <Footer />

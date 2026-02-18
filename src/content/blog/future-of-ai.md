@@ -2,7 +2,7 @@
 title: "The Future of AI in Creative Design"
 description: "Exploring how artificial intelligence is reshaping the landscape of digital design and user experience."
 pubDate: "2026-02-19"
-heroImage: "/Images/Ai.png"
+heroImage: "/Images/Gemini_Generated_Image_cub7ghcub7ghcub7.png"
 tags: ["AI", "Design", "Future"]
 ---
 
