@@ -14,7 +14,7 @@ export default function GiscusComments() {
         const getTheme = () => {
             return document.documentElement.classList.contains('dark')
                 ? 'noborder_dark'
-                : 'noborder_gray';
+                : 'light';
         };
 
         // Initialize Giscus

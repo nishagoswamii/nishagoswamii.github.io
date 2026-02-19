@@ -29,9 +29,9 @@ export default function Contact() {
                         </div>
                         <h3 className="text-xl font-bold">Connect</h3>
                         <div className="flex gap-4">
-                            <a href="#https://linkedin.com/in/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin className="w-5 h-5" /></a>
-                            <a href="#https://github.com/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors"><Github className="w-5 h-5" /></a>
-                            <a href="#https://codeforces.com/profile/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors" title="Codeforces">
+                            <a href="https://linkedin.com/in/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin className="w-5 h-5" /></a>
+                            <a href="https://github.com/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors"><Github className="w-5 h-5" /></a>
+                            <a href="https://codeforces.com/profile/nishagoswamii" className="text-muted-foreground hover:text-primary transition-colors" title="Codeforces">
                                 <svg role="img" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                                     <path d="M4.5 7.5A1.5 1.5 0 0 1 6 9v10.5A1.5 1.5 0 0 1 4.5 21H1.5A1.5 1.5 0 0 1 0 19.5V9a1.5 1.5 0 0 1 1.5-1.5h3zm9-4.5A1.5 1.5 0 0 1 15 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 19.5V4.5A1.5 1.5 0 0 1 10.5 3h3zm9 9A1.5 1.5 0 0 1 24 13.5v6a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 18 19.5v-6a1.5 1.5 0 0 1 1.5-1.5h3z" />
                                 </svg>

@@ -13,8 +13,8 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground md:flex-row md:text-left">
           <div className="flex gap-4">
             {footerData.socialLinks.map((link) => (
-              <Button key={link.name} variant="outline" size="icon" className="rounded-full">
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
+              <Button key={link.name} variant="outline" size="icon" className="rounded-full" asChild>
+                <a href={link.url} target={link.url.startsWith('mailto') ? undefined : '_blank'} rel="noopener noreferrer">
                   {link.icon === 'Github' && <Github className="h-5 w-5" />}
                   {link.icon === 'Linkedin' && <Linkedin className="h-5 w-5" />}
                   {link.icon === 'Mail' && <Mail className="h-5 w-5" />}

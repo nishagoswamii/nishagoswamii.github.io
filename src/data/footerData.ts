@@ -13,7 +13,7 @@ export const footerData = {
     },
     {
       name: 'Email',
-      url: 'nnishagoswamii@gmail.com',
+      url: 'mailto:nnishagoswamii@gmail.com',
       icon: 'Mail'
     }
   ],
