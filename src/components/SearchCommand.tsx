@@ -44,7 +44,7 @@ export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }:
     return (
         <CommandDialog open={open} onOpenChange={onOpenChange}>
             <CommandInput placeholder="Type a command or search..." value={query} onValueChange={setQuery} />
-            <CommandList>
+            <CommandList className="thin-scrollbar">
                 <CommandEmpty>No results found.</CommandEmpty>
 
                 <CommandGroup heading="Pages">

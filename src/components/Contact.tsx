@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { Mail, Linkedin, Github } from 'lucide-react';
+import { Mail, Linkedin, Github, Handshake } from 'lucide-react';
 
 export default function Contact() {
     return (
@@ -25,7 +25,7 @@ export default function Contact() {
 
                     <div className="bg-secondary/10 p-8 rounded-2xl flex flex-col items-center justify-center gap-4 hover:bg-secondary/20 transition-colors">
                         <div className="bg-background p-4 rounded-full shadow-sm">
-                            <Linkedin className="w-8 h-8 text-primary" />
+                            <Handshake className="w-8 h-8 text-primary" />
                         </div>
                         <h3 className="text-xl font-bold">Connect</h3>
                         <div className="flex gap-4">

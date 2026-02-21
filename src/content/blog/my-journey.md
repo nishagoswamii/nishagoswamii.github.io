@@ -5,11 +5,11 @@ pubDate: "2026-02-17"
 tags: ["Personal", "Life"]
 ---
 
-# You can know me better here.
 
-I was born on a hot summer day, perhaps that’s why I carry a little of summer with me. I grew up in a warm, traditional Indian family. My parents are simple people, and to me they are the most extraordinary humans on earth. I have a younger brother who means the world to me.
 
-As a child I was outgoing and endlessly imaginative. I invented story-games and dragged my friends into them every day. I lived inside those stories, tales of superheroes, zombies, and Power Rangers (I always chose to be the Red Ranger). Cardboard forts in my grandfather’s backyard became whole dreamlands. I’ve always been a storyteller, and I always will be. So here I am, sharing my story with you, my friends.
+I was born on a hot summer day, perhaps that’s why I carry a little of summer with me. I grew up in a warm, traditional Indian family. My parents are simple people, and to me they're the most extraordinary humans on earth. I have a younger brother who means the world to me.
+
+As a child I was outgoing and endlessly imaginative. I invented story-games and dragged my friends into them every day. I lived inside those stories, tales of superheroes, zombies, and Power Rangers (I always choose to be the Red Ranger). Cardboard forts in my grandfather’s backyard became whole dreamlands. I’ve always been a storyteller, and I always will be. So here I am, sharing my story with you, my friends.
 
 I’ve always loved trying new things -art, tech, sports. 
 

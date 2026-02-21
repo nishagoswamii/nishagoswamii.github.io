@@ -7,20 +7,20 @@ import { Button } from './ui/button';
 export default function Projects() {
     return (
         <section id="projects" className="py-24 bg-secondary/5">
-            <div className="container mx-auto px-4 z-10 relative">
-                <div className="max-w-2xl mx-auto text-center mb-20">
-                    <h2 className="text-4xl md:text-5xl font-special font-bold mb-6">Selected Works</h2>
+            <div className="container mx-auto px-4 max-w-5xl z-10 relative">
+                <div className="max-w-2xl mx-auto text-center mb-16">
+                    <h2 className="text-4xl font-heading font-bold mb-6">Projects</h2>
                     <p className="text-muted-foreground text-lg">
                         A small selection of projects that showcase my passion for building things!
                     </p>
                 </div>
 
-                <div className="flex flex-col gap-20 md:gap-32">
+                <div className="flex flex-col gap-16">
                     {projects.map((project, i) => (
-                        <div key={project.id} className={`flex flex-col md:flex-row gap-8 md:gap-16 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                        <div key={project.id} className={`flex flex-col md:flex-row gap-8 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
 
                             {/* Image Section */}
-                            <div className="w-full md:w-1/5 group">
+                            <div className="w-full md:w-2/5 group">
                                 <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-2xl aspect-video">
                                     <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                                     <img
@@ -32,7 +32,7 @@ export default function Projects() {
                             </div>
 
                             {/* Content Section */}
-                            <div className="w-full md:w-4/5 space-y-6">
+                            <div className="w-full md:w-3/5 space-y-4">
                                 <div className="flex flex-wrap gap-2">
                                     {project.tags.slice(0, 4).map(tag => (
                                         <span key={tag} className="px-3 py-1 text-xs font-mono font-medium tracking-wider rounded-full border border-primary/20 text-primary bg-primary/5 uppercase">
@@ -48,18 +48,18 @@ export default function Projects() {
                                         rel="noopener noreferrer"
                                         className="hover:text-primary transition-colors inline-block"
                                     >
-                                        <h3 className="text-3xl md:text-4xl font-special font-bold text-foreground leading-tight flex items-center gap-3">
+                                        <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight flex items-center gap-3">
                                             {project.title}
-                                            <Github className="w-6 h-6 md:w-8 md:h-8 inline-block" />
+                                            <Github className="w-5 h-5 md:w-6 md:h-6 inline-block" />
                                         </h3>
                                     </a>
                                 ) : (
-                                    <h3 className="text-3xl md:text-4xl font-special font-bold text-foreground leading-tight">
+                                    <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight">
                                         {project.title}
                                     </h3>
                                 )}
 
-                                <p className="text-muted-foreground text-base leading-relaxed">
+                                <p className="text-muted-foreground text-sm leading-relaxed">
                                     {project.summary}
                                 </p>
 
