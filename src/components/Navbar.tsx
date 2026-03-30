@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeToggle } from './ThemeToggle';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X, FileText } from 'lucide-react';
 import { SearchCommand } from './SearchCommand';
+import { Button } from './ui/button';
 
 const navItems = [
     { name: 'Home', href: '/' },
@@ -57,6 +58,12 @@ export function Navbar({ posts = [], projects = [] }: NavbarProps) {
                     </ul>
 
                     <div className="flex items-center gap-2 pl-4 border-l border-border">
+                        <Button variant="outline" size="sm" className="hidden lg:flex items-center gap-2" asChild>
+                            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+                                <FileText className="w-4 h-4" />
+                                Resume
+                            </a>
+                        </Button>
                         <button
                             className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground bg-muted/50 hover:bg-muted rounded-md border border-input transition-colors"
                             onClick={() => setOpen(true)}
@@ -88,6 +95,12 @@ export function Navbar({ posts = [], projects = [] }: NavbarProps) {
             {isMenuOpen && (
                 <div className="md:hidden border-t border-border bg-background">
                     <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+                        <Button variant="outline" className="w-full flex items-center justify-center gap-2" asChild>
+                            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)}>
+                                <FileText className="w-4 h-4" />
+                                Resume
+                            </a>
+                        </Button>
                         <button
                             className="flex items-center gap-2 w-full px-4 py-2 text-sm font-medium text-muted-foreground bg-muted/50 hover:bg-muted rounded-md border border-input transition-colors"
                             onClick={() => {

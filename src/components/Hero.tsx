@@ -45,6 +45,9 @@ const Hero = () => {
                 <a href="#projects">View Work</a>
               </Button>
               <Button variant="outline" size="lg" className="rounded-full text-base px-8 h-12" asChild>
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+              </Button>
+              <Button variant="outline" size="lg" className="rounded-full text-base px-8 h-12" asChild>
                 <a href="#contact">Contact Me</a>
               </Button>
             </div>
