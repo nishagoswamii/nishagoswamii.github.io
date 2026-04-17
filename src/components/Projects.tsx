@@ -1,10 +1,51 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { projects } from '@/data/portfolioData';
-import { ArrowUpRight, Github } from 'lucide-react';
+import { ArrowUpRight, Github, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 
 export default function Projects() {
+    const [imageIndices, setImageIndices] = useState<Record<number, number>>({});
+
+    // Initialize image indices
+    useEffect(() => {
+        const initialIndices: Record<number, number> = {};
+        projects.forEach(project => {
+            initialIndices[project.id] = 0;
+        });
+        setImageIndices(initialIndices);
+    }, []);
+
+    // Auto-rotate images
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setImageIndices(prev => {
+                const newIndices = { ...prev };
+                projects.forEach(project => {
+                    const currentIndex = newIndices[project.id] || 0;
+                    newIndices[project.id] = (currentIndex + 1) % project.images.length;
+                });
+                return newIndices;
+            });
+        }, 5000); // Change image every 5 seconds
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const handlePrevImage = (projectId: number, totalImages: number) => {
+        setImageIndices(prev => ({
+            ...prev,
+            [projectId]: (prev[projectId] - 1 + totalImages) % totalImages
+        }));
+    };
+
+    const handleNextImage = (projectId: number, totalImages: number) => {
+        setImageIndices(prev => ({
+            ...prev,
+            [projectId]: (prev[projectId] + 1) % totalImages
+        }));
+    };
+
     return (
         <section id="projects" className="py-24 bg-secondary/5">
             <div className="container mx-auto px-4 max-w-5xl z-10 relative">
@@ -16,75 +57,129 @@ export default function Projects() {
                 </div>
 
                 <div className="flex flex-col gap-16">
-                    {projects.map((project, i) => (
-                        <div key={project.id} className={`flex flex-col md:flex-row gap-8 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                    {projects.map((project, i) => {
+                        const currentImageIndex = imageIndices[project.id] || 0;
+                        const currentImage = project.images[currentImageIndex];
 
-                            {/* Image Section */}
-                            <div className="w-full md:w-2/5 group">
-                                <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-2xl aspect-video">
-                                    <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                    <img
-                                        src={project.images[0]}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                </div>
-                            </div>
+                        return (
+                            <div key={project.id} className={`flex flex-col md:flex-row gap-8 items-center ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
 
-                            {/* Content Section */}
-                            <div className="w-full md:w-3/5 space-y-4">
-                                <div className="flex flex-wrap gap-2">
-                                    {project.tags.slice(0, 4).map(tag => (
-                                        <span key={tag} className="px-3 py-1 text-xs font-mono font-medium tracking-wider rounded-full border border-primary/20 text-primary bg-primary/5 uppercase">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
+                                {/* Image Section with Carousel */}
+                                <div className="w-full md:w-2/5 group relative">
+                                    <div className="relative overflow-hidden rounded-2xl border border-border/50 shadow-2xl aspect-video">
+                                        <div className="absolute inset-0 bg-primary/10 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        
+                                        {/* Sliding Images */}
+                                        <div className="relative w-full h-full overflow-hidden">
+                                            {project.images.map((img, idx) => (
+                                                <img
+                                                    key={idx}
+                                                    src={img}
+                                                    alt={`${project.title} - ${idx + 1}`}
+                                                    className={`absolute w-full h-full object-cover transition-all duration-700 ease-in-out transform ${
+                                                        idx === currentImageIndex
+                                                            ? 'opacity-100 translate-x-0'
+                                                            : idx < currentImageIndex
+                                                            ? 'opacity-0 -translate-x-full'
+                                                            : 'opacity-0 translate-x-full'
+                                                    } group-hover:scale-105`}
+                                                />
+                                            ))}
+                                        </div>
 
-                                {project.githubUrl ? (
-                                    <a
-                                        href={project.githubUrl}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-primary transition-colors inline-block"
-                                    >
-                                        <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight flex items-center gap-3">
-                                            {project.title}
-                                            <Github className="w-5 h-5 md:w-6 md:h-6 inline-block" />
-                                        </h3>
-                                    </a>
-                                ) : (
-                                    <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight">
-                                        {project.title}
-                                    </h3>
-                                )}
+                                        {/* Navigation Buttons */}
+                                        {project.images.length > 1 && (
+                                            <>
+                                                <button
+                                                    onClick={() => handlePrevImage(project.id, project.images.length)}
+                                                    className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                                                    aria-label="Previous image"
+                                                >
+                                                    <ChevronLeft className="w-5 h-5" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleNextImage(project.id, project.images.length)}
+                                                    className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-all duration-200 opacity-0 group-hover:opacity-100"
+                                                    aria-label="Next image"
+                                                >
+                                                    <ChevronRight className="w-5 h-5" />
+                                                </button>
 
-                                <p className="text-muted-foreground text-sm leading-relaxed">
-                                    {project.summary}
-                                </p>
-
-                                <div className="p-4 bg-card rounded-xl border border-border/50 shadow-sm">
-                                    <h4 className="text-sm font-bold font-heading mb-2">The Solution</h4>
-                                    <p className="text-sm text-muted-foreground">
-                                        {project.details.solution}
-                                    </p>
-                                </div>
-
-                                <div className="pt-2">
-                                    {project.externalLink && (
-                                        <Button variant="outline" className="group rounded-full pl-6 pr-4" asChild>
-                                            <a href={project.externalLink.url} target="_blank" rel="noreferrer" className="flex items-center gap-2">
-                                                View Project
-                                                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center -mr-2 group-hover:bg-primary/90 transition-colors">
-                                                    <ArrowUpRight className="w-4 h-4" />
+                                                {/* Image Indicators */}
+                                                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                                    {project.images.map((_, idx) => (
+                                                        <button
+                                                            key={idx}
+                                                            onClick={() => setImageIndices(prev => ({ ...prev, [project.id]: idx }))}
+                                                            className={`h-2 rounded-full transition-all duration-300 ${
+                                                                idx === currentImageIndex
+                                                                    ? 'bg-white w-6'
+                                                                    : 'bg-white/50 w-2 hover:bg-white/75'
+                                                            }`}
+                                                            aria-label={`Image ${idx + 1}`}
+                                                        />
+                                                    ))}
                                                 </div>
-                                            </a>
-                                        </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Content Section */}
+                                <div className="w-full md:w-3/5 space-y-4">
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.tags.slice(0, 4).map(tag => (
+                                            <span key={tag} className="px-3 py-1 text-xs font-mono font-medium tracking-wider rounded-full border border-primary/20 text-primary bg-primary/5 uppercase">
+                                                {tag}
+                                            </span>
+                                        ))}
+                                    </div>
+
+                                    {project.githubUrl ? (
+                                        <a
+                                            href={project.githubUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="hover:text-primary transition-colors inline-block"
+                                        >
+                                            <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight flex items-center gap-3">
+                                                {project.title}
+                                                <Github className="w-5 h-5 md:w-6 md:h-6 inline-block" />
+                                            </h3>
+                                        </a>
+                                    ) : (
+                                        <h3 className="text-2xl md:text-3xl font-special font-bold text-foreground leading-tight">
+                                            {project.title}
+                                        </h3>
                                     )}
+
+                                    <p className="text-muted-foreground text-sm leading-relaxed">
+                                        {project.summary}
+                                    </p>
+
+                                    <div className="p-4 bg-card rounded-xl border border-border/50 shadow-sm">
+                                        <h4 className="text-sm font-bold font-heading mb-2">The Solution</h4>
+                                        <p className="text-sm text-muted-foreground">
+                                            {project.details.solution}
+                                        </p>
+                                    </div>
+
+                                    <div className="pt-2">
+                                        {project.externalLink && (
+                                            <Button variant="outline" className="group rounded-full pl-6 pr-4" asChild>
+                                                <a href={project.externalLink.url} target="_blank" rel="noreferrer" className="flex items-center gap-2">
+                                                    View Project
+                                                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center -mr-2 group-hover:bg-primary/90 transition-colors">
+                                                        <ArrowUpRight className="w-4 h-4" />
+                                                    </div>
+                                                </a>
+                                            </Button>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>
