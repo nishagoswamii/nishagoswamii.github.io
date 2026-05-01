@@ -13,7 +13,7 @@ As a child I was outgoing and endlessly imaginative. I invented story-games and 
 
 I’ve always loved trying new things -art, tech, sports. 
 
-In my early years I moved often between my grandparents’ home and my parents’ house in the city where my father worked. Along the way I made more friends than I expected kind kids welcomed me into their circles. 
+In my early years I moved often between my grandparents’ home and my parents’ house in the city where my father worked. Along the way I made more friends than I expected, kind kids welcomed me into their circles. 
 
 Books are my closest companions. I’m fascinated not just by stories but by the lives of the people who write them- Why they wrote what they wrote? 
 
