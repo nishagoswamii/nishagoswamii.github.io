@@ -1,6 +1,7 @@
 ---
 title: "My Failures"
 description: "Keeping the record of my failures so far here."
+draft: true
 pubDate: "2026-05-02"
 tags: ["Personal", "Life"]
 ---

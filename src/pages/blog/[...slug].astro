@@ -26,7 +26,7 @@ type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
 const { Content } = await post.render();
 
-const allPosts = (await getCollection('blog')).map(p => ({
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).map(p => ({
   title: p.data.title,
   slug: p.slug
 }));

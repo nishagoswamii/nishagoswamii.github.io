@@ -12,7 +12,7 @@ import { config } from '../data/config';
 import { getCollection } from 'astro:content';
 import { projects } from '@/data/portfolioData';
 
-const posts = (await getCollection('blog')).map(post => ({
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).map(post => ({
   title: post.data.title,
   slug: post.slug
 }));
