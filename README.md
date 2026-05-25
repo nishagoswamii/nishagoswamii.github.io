@@ -3,8 +3,7 @@
 
 Personal portfolio built with Astro, React, and Tailwind CSS.
 
-- Live si
-te: https://www.nishagoswami.com
+- Live site: https://www.nishagoswami.com
 - Local dev URL: http://localhost:4321
 
 ## Tech stack
