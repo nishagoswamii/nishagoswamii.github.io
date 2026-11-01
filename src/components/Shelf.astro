@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Sticker from '@/components/Sticker';
+import StickerTitle from '@/components/StickerTitle';
+import type { Mood } from '@/data/moods';
+
+interface Props {
+  type: 'book' | 'movie';
+  id: string;
+  title: string;
+  sheet: string;
+  mood: Mood;
+  link?: { href: string; label: string };
+}
+
+const { type, id, title, sheet, mood, link } = Astro.props;
+
+// Add one by dropping a new file in src/content/reviews. Current one first, then newest, then undated by file name.
+const inProgress = ({ data }: { data: { status: string } }) => data.status === 'reading' || data.status === 'watching';
+const reviews = (await getCollection('reviews', ({ data }) => data.type === type)).sort((a, b) =>
+  Number(inProgress(b)) - Number(inProgress(a)) || (b.data.pubDate?.valueOf() ?? 0) - (a.data.pubDate?.valueOf() ?? 0) || a.id.localeCompare(b.id));
+const tag = (status: string) => status === 'reading' || status === 'watching' ? `Currently ${status}` : status.replace(/_/g, ' ');
+---
+
+{reviews.length > 0 && <section class={`book-section ${sheet}`} id={id}>
+  <StickerTitle text={title} />
+  <div class="section-sticker"><Sticker mood={mood} react="laugh" /></div>
+  <div class="shelf-rail" tabindex="0" role="region" aria-label={title} data-scroll-reveal>
+    {reviews.map(review => <article class="note shelf-card">
+      <div class="note-face">
+        <span class="tape-bit" aria-hidden="true"></span>
+        {review.data.cover && <img class="shelf-cover" src={review.data.cover.trim()} alt="" loading="lazy" draggable="false" />}
+        {review.data.status !== 'completed' && <span class="shelf-tag">{tag(review.data.status)}</span>}
+        <strong>{review.data.title}</strong>
+        <span class="shelf-by">{review.data.author ?? review.data.director}</span>
+        {review.body.trim() && <p>{review.body.trim()}</p>}
+        {(review.data.pubDate || review.data.rating) && <span class="note-meta">{review.data.pubDate && <time datetime={review.data.pubDate.toISOString()}>{review.data.pubDate.getFullYear()}</time>}{review.data.rating && <span role="img" aria-label={`Rated ${review.data.rating} out of 5`}>{'★'.repeat(review.data.rating)}{review.data.rating % 1 ? '½' : ''}</span>}</span>}
+      </div>
+    </article>)}
+  </div>
+  <div class="shelf-foot">
+    <div class="shelf-arrows" hidden>
+      <button type="button" class="shelf-prev" aria-label={`Scroll ${title} back`}>←</button>
+      <button type="button" class="shelf-next" aria-label={`Scroll ${title} forward`}>→</button>
+    </div>
+    {link && <a class="shelf-link" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>}
+  </div>
+</section>}

@@ -4,18 +4,13 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { Navbar } from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { GridBackground } from '@/components/GridBackground';
 import GiscusComments from '@/components/GiscusComments';
 
+import PictureBook from '@/components/PictureBook.astro';
 import { projects } from '@/data/portfolioData';
-import ReviewGrid from '@/components/ReviewGrid';
-
-const reviews = await getCollection('reviews');
-const bookReviews = reviews.filter(r => r.data.type === 'book');
-const movieReviews = reviews.filter(r => r.data.type === 'movie');
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blog', ({ data }) => !data.draft);
 	return posts.map((post) => ({
 		params: { slug: post.slug },
 		props: post,
@@ -38,94 +33,25 @@ const searchProjects = projects.map(p => ({
 }));
 ---
 
-<Layout title={post.data.title}>
-    <GridBackground client:load />
+<Layout title={`${post.data.title} | Nisha Goswami`} description={post.data.description}>
     <Navbar client:load posts={allPosts} projects={searchProjects} />
 
-	<main class="relative z-10 pt-32 pb-20 min-h-screen">
-        <article class="container mx-auto px-4 max-w-3xl">
-            <header class="mb-12 text-center">
-                 <div class="mb-4 flex items-center justify-center gap-2">
-                    <time datetime={post.data.pubDate.toISOString()} class="text-sm font-mono text-muted-foreground">
-                        {post.data.pubDate.toLocaleDateString('en-us', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                        })}
-                    </time>
-                    {post.data.tags && (
-                        <>
-                         <span class="text-muted-foreground">•</span>
-                         <div class="flex gap-2">
-                            {post.data.tags.map(tag => (
-                                <span class="text-xs font-mono bg-secondary/30 px-2 py-1 rounded text-secondary-foreground">{tag}</span>
-                            ))}
-                         </div>
-                        </>
-                    )}
-                 </div>
-                 
-                 <h1 class="text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight">{post.data.title}</h1>
-                 
-                 {post.data.heroImage && (
-                    <div class="relative mb-12 group">
-                        <!-- Glow behind image -->
-                        <div class="absolute -inset-4 bg-primary/10 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10"></div>
-                        <!-- Image container -->
-                        <div class="relative overflow-hidden rounded-2xl shadow-2xl border border-border/30">
-                            <img width={1020} height={510} src={post.data.heroImage} alt=""
-                                class="w-full object-cover aspect-video transition-transform duration-700 group-hover:scale-105"
-                            />
-                            <!-- Gradient overlay -->
-                            <div class="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity duration-500"></div>
-                            <!-- Shimmer effect -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-                        </div>
-                    </div>
-                 )}
+    {post.slug === 'my-journey' ? <PictureBook title={post.data.title} date={post.data.pubDate} body={post.body} /> : (
+	<main class="relative z-10 min-h-screen">
+        <article class="post">
+            <a class="post-back" href="/blog">← All writing</a>
+            <header class="post-header">
+                <h1>{post.data.title}</h1>
+                <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}</time>
+                {post.data.heroImage && <img class="post-hero" width={1020} height={510} src={post.data.heroImage} alt="" />}
             </header>
 
-            {post.slug === 'my-journey' && (
-                <div class="mb-16 relative max-w-3xl mx-auto group">
-                    <div class="relative bg-card/40 backdrop-blur-xl border border-border p-6 rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row gap-8 items-center">
-                        <!-- Childhood Image -->
-                        <div class="relative w-full md:w-2/5 aspect-[4/5] md:aspect-square overflow-hidden rounded-[1.5rem] bg-muted shrink-0">
-                            <img
-                                src="/Images/childhood.jpg"
-                                alt="Childhood memory"
-                                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-                            />
-                            <div class="absolute bottom-0 left-0 p-4 text-white bg-gradient-to-t from-black/80 to-transparent w-full">
-                                <div class="text-[10px] font-mono opacity-80 uppercase tracking-widest">The Start</div>
-                            </div>
-                        </div>
-                        <!-- Text Content -->
-                        <div class="flex-1 space-y-4 text-center md:text-left">
-                            <h3 class="text-2xl font-special font-bold leading-tight">You can know me better here.</h3>
-                            <p class="text-muted-foreground text-base leading-relaxed">Every story has a beginning. This is mine — curious, restless, and full of wonder.</p>
-                            <div class="pt-2 flex justify-center md:justify-start">
-                                <span class="text-xs font-mono text-muted-foreground/60 uppercase tracking-widest">scroll down to read ↓</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Decorative Elements -->
-                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-                </div>
-            )}
-            
-            <div class="prose prose-lg dark:prose-invert prose-headings:font-heading prose-a:text-primary mx-auto">
+            <div class="prose prose-lg post-body prose-headings:font-serif prose-headings:font-medium prose-a:text-primary prose-blockquote:border-primary prose-blockquote:font-serif prose-blockquote:text-2xl">
 				<Content />
 			</div>
-                <GiscusComments client:load />
-            </div>
-
-            {post.slug === 'my-journey' && (
-                <div class="mt-20 space-y-12 border-t border-border pt-12">
-                     <ReviewGrid client:visible title="Books Shelf" reviews={bookReviews} />
-                     <ReviewGrid client:visible title="Movies & Shows" reviews={movieReviews} />
-                </div>
-            )}
+            <GiscusComments client:load />
         </article>
 	</main>
+    )}
     <Footer />
 </Layout>

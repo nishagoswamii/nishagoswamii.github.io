@@ -85,7 +85,7 @@ export function GridBackground() {
                     const node: GridNode = {
                         x: col * GRID,
                         y: row * GRID,
-                        opacity: 0.35 + Math.random() * 0.45,
+                        opacity: 0.16 + Math.random() * 0.3,
                         pulsePhase: Math.random() * Math.PI * 2,
                         pulseSpeed: 0.014 + Math.random() * 0.018,
                     };
@@ -96,7 +96,7 @@ export function GridBackground() {
 
             const tryAddEdge = (x1: number, y1: number, x2: number, y2: number) => {
                 if (x1 === x2 && y1 === y2) return;
-                const maxOpacity = 0.15 + Math.random() * 0.35;
+                const maxOpacity = 0.06 + Math.random() * 0.16;
                 newEdges.push(createEdge(x1, y1, x2, y2, maxOpacity));
             };
 
@@ -161,7 +161,7 @@ export function GridBackground() {
             const x2 = horizontal ? origin.x + span * dir : origin.x;
             const y2 = horizontal ? origin.y : origin.y + span * dir;
 
-            edges.push(createEdge(origin.x, origin.y, x2, y2, 0.2 + Math.random() * 0.3));
+            edges.push(createEdge(origin.x, origin.y, x2, y2, 0.08 + Math.random() * 0.14));
 
             if (edges.length > 220) {
                 edges.shift();
@@ -181,7 +181,7 @@ export function GridBackground() {
             ctx.clearRect(0, 0, width, height);
 
             const isDark = document.documentElement.classList.contains('dark');
-            const baseRgb = isDark ? '255, 255, 255' : '10, 10, 10';
+            const baseRgb = isDark ? '199, 121, 79' : '151, 75, 43';
 
             time += 1;
             driftX = Math.sin(time * 0.002) * 7;
@@ -239,7 +239,9 @@ export function GridBackground() {
 
             if (time % 50 === 0) spawnEdge();
 
-            animationFrameId = requestAnimationFrame(draw);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                animationFrameId = requestAnimationFrame(draw);
+            }
         };
 
         init();
@@ -258,7 +260,7 @@ export function GridBackground() {
     return (
         <canvas
             ref={canvasRef}
-            className="fixed inset-0 z-[-1] pointer-events-none bg-background transition-colors duration-300"
+            className="fixed inset-0 z-[-1] bg-background opacity-70 transition-colors duration-300 pointer-events-none"
         />
     );
 }

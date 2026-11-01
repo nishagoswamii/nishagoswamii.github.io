@@ -5,9 +5,13 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        heading: ['Outfit', 'sans-serif'],
-        special: ['Space Grotesk', 'sans-serif'],
+        sans: ['Kalam', 'cursive'],
+        heading: ['Bagel Fat One', 'Kalam', 'cursive'],
+        special: ['Kalam', 'cursive'],
+        serif: ['Bagel Fat One', 'Kalam', 'cursive'],
+        mono: ['Kalam', 'cursive'],
+        hand: ['Caveat', 'cursive'],
+        doodle: ['Bagel Fat One', 'Kalam', 'cursive'],
       },
       colors: {
         border: 'hsl(var(--border))',

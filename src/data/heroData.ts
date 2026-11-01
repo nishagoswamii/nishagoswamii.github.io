@@ -18,6 +18,6 @@ export const heroData = {
   contact: {
     github: 'https://github.com/nishagoswamii',
     linkedin: 'https://www.linkedin.com/in/nishagoswamii/overlay/about-this-profile/',
-    email: 'nishagoswami369@gmail.com'
+    email: 'hello@nishagoswami.com'
   }
 };

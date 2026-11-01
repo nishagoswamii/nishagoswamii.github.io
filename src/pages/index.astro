@@ -2,17 +2,23 @@
 import '@/styles/globals.css'
 import Layout from '../layouts/Layout.astro';
 import { Navbar } from '@/components/Navbar';
-import { GridBackground } from '@/components/GridBackground';
+import CloudBackground from '@/components/CloudBackground';
+import LoadingScreen from '@/components/LoadingScreen';
 import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
-import Projects from '@/components/Projects';
+import Shelf from '@/components/Shelf.astro';
+import QuoteBoard from '@/components/QuoteBoard';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import Sticker from '@/components/Sticker';
+import StickerTitle from '@/components/StickerTitle';
 import { config } from '../data/config';
 import { getCollection } from 'astro:content';
 import { projects } from '@/data/portfolioData';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).map(post => ({
+const entries = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = entries.map(post => ({
   title: post.data.title,
   slug: post.slug
 }));
@@ -26,18 +32,62 @@ const searchProjects = projects.map(p => ({
 
 <Layout title={config.siteTitle}>
   
-  <GridBackground client:load />
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      if (window.__introPlayed || location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      window.__introPlayed = true;
+      root.classList.add('intro-playing', 'intro-hold');
+      history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+      // Never leave the page hidden if hydration fails.
+      setTimeout(function () { root.classList.remove('intro-playing', 'intro-hold', 'intro-arrived'); history.scrollRestoration = 'auto'; }, 9000);
+    })();
+  </script>
+  <CloudBackground client:load />
+  <LoadingScreen client:load />
   <Navbar client:load posts={posts} projects={searchProjects} />
-  
+
   <main class="relative z-10">
     <Hero client:load />
-    <Experience client:visible />
-    <Projects client:visible />
-    <Contact client:visible />
+    <Experience />
+    <section class="book-section sheet-paper" id="writing">
+      <StickerTitle text="Writing" />
+      <div class="section-sticker"><Sticker mood="think" react="laugh" /></div>
+      <div class="note-board">
+        {entries.filter(post => post.slug !== 'coming-soon').slice(0, 3).map((post, index) => <div data-scroll-reveal style={`--reveal-delay:${index * 110}ms`}><a class="note" href={`/blog/${post.slug}`} data-drag draggable="false">
+          <span class="note-face"><span class="tape-bit" aria-hidden="true"></span><strong>{post.data.title}</strong><span class="note-meta"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.getFullYear()}</time><span aria-hidden="true">↗</span></span></span>
+        </a></div>)}
+      </div>
+      <a class="shelf-link" href="/blog">All writing →</a>
+    </section>
+    <Shelf type="book" id="books" title="Books" sheet="sheet-purple" mood="wow" />
+    <Shelf type="movie" id="movies" title="Movies" sheet="sheet-sky" mood="laugh" link={{ href: 'https://boxd.it/jEtdF', label: 'My Letterboxd →' }} />
+    <Contact />
+    <section class="quote-full" id="quotes" aria-label="Quotes">
+      <QuoteBoard client:visible />
+    </section>
   </main>
-
   <Footer />
+  <a class="scroll-star" href="#home" aria-label="Back to top"><img src="/Images/stickers/star.webp" alt="" /></a>
+  <script is:inline>
+    (function () {
+      var root = document.documentElement;
+      if (!root.classList.contains('intro-hold')) return;
+      // Measure where the avatar sits in the hero, then place it centre stage for the intro.
+      var stage = document.querySelector('.avatar-stage');
+      stage.style.transition = 'none';
+      stage.style.transform = 'none';
+      var box = stage.getBoundingClientRect();
+      stage.style.transform = '';
+      var vw = root.clientWidth, vh = window.innerHeight;
+      var size = Math.min(vw * .84, vh * .6), centerY = vh * .6;
+      root.style.setProperty('--intro-x', (vw / 2 - box.left - box.width / 2) + 'px');
+      root.style.setProperty('--intro-y', (centerY - box.top - box.height / 2) + 'px');
+      root.style.setProperty('--intro-scale', size / Math.min(box.width, box.height));
+      root.style.setProperty('--bubble-top', (centerY - size * .47) + 'px');
+      stage.getBoundingClientRect();
+      stage.style.transition = '';
+    })();
+  </script>
 </Layout>
-
-</file>
-</boltArtifact>

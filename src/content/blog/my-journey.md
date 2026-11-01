@@ -19,7 +19,7 @@ Books are my closest companions. I’m fascinated not just by stories but by the
 
 My love for writing began in my early teens when my school teacher praised my work; that encouragement kept me writing, and it still does.
 
-And other than that I love pizza, coffee, music, movies, anime, books, adventure, mountains, beaches, flowers, chocolates and a lot more stuffs.
+And other than that I love pizza, coffee, music, movies, anime, books, adventure, mountains, beaches, flowers, chocolates and a lot more stuffs...
 
 Here, I quote something written by Albert Camus:
 
