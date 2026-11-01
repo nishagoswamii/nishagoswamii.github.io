@@ -1,23 +1,40 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TypingAnimation } from './ui/typing-animation';
 
 const GREETING = "Hi, I'm Nisha";
+const SCROLL_KEYS = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '];
 
 /** Sky overlay for the intro. The avatar itself lives in the hero and is moved to centre stage by CSS. */
 export default function LoadingScreen() {
   const [active, setActive] = useState(true);
   const [talking, setTalking] = useState(false);
   const [leaving, setLeaving] = useState(false);
-  const finish = useRef<() => void>(() => {});
   useEffect(() => {
     const root = document.documentElement;
     if (!root.classList.contains('intro-playing')) { setActive(false); return; }
     const timers: number[] = [];
-    let begun = false;
+    let begun = false, skipped = false;
     const release = () => { root.classList.remove('intro-hold', 'intro-arrived'); history.scrollRestoration = 'auto'; };
-    const done = () => { release(); root.classList.remove('intro-playing'); setActive(false); };
+    const done = () => { stopListening(); release(); root.classList.remove('intro-playing'); setActive(false); };
     const leave = () => { release(); setLeaving(true); };
-    finish.current = () => { timers.forEach(clearTimeout); leave(); timers.push(window.setTimeout(done, 450)); };
+    // Trying to scroll ends the intro at once. Until it's gone, the scroll is held so momentum can't carry past the hero.
+    const skip = (event: Event) => {
+      event.preventDefault();
+      if (skipped) return;
+      skipped = true; begun = true;
+      timers.forEach(clearTimeout);
+      leave();
+      timers.push(window.setTimeout(done, 450));
+    };
+    const onKey = (event: KeyboardEvent) => { if (SCROLL_KEYS.includes(event.key)) skip(event); };
+    const stopListening = () => {
+      window.removeEventListener('wheel', skip);
+      window.removeEventListener('touchmove', skip);
+      window.removeEventListener('keydown', onKey);
+    };
+    window.addEventListener('wheel', skip, { passive: false });
+    window.addEventListener('touchmove', skip, { passive: false });
+    window.addEventListener('keydown', onKey);
     const begin = () => {
       if (begun) return;
       begun = true;
@@ -39,6 +56,5 @@ export default function LoadingScreen() {
       <span className="speech-ghost">{GREETING}</span>
       <TypingAnimation startOnView={false} typeSpeed={55} className="speech-text">{GREETING}</TypingAnimation>
     </div>}
-    <button className="intro-skip" onClick={() => finish.current()}>Skip</button>
   </div>;
 }

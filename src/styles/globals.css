@@ -110,9 +110,6 @@ html:not(.intro-playing) .loading-screen {display:none;}
 .speech-ghost {visibility:hidden;}
 .speech-text {position:relative;z-index:1;}
 .typing-cursor {display:none;}
-.intro-skip {position:absolute;right:6%;bottom:26px;min-height:44px;padding:0 6px;font-size:17px;font-weight:700;opacity:.7;transition:opacity .25s;}
-.intro-skip:hover {opacity:1;}
-.is-leaving .intro-skip {opacity:0;}
 
 /* Pages of the book */
 .book-section {--dot:#1e143314;--sec-top:var(--sec-y);position:relative;padding:var(--sec-top) var(--edge) var(--sec-y);color:var(--ink);background:radial-gradient(var(--dot) 1.6px,transparent 2px) 0 0/24px 24px,var(--sheet);overflow-x:clip;}
@@ -405,7 +402,6 @@ html:not(.intro-playing) .loading-screen {display:none;}
 .last-page {align-items:center;justify-content:center;text-align:center;}
 .last-buddy {--r:-3deg;width:clamp(220px,26vw,350px);}
 .to-be-continued {margin:4px 0 0;font-size:clamp(20px,1.8vw,24px);font-weight:700;color:var(--purple);}
-.book-endpapers {position:relative;z-index:1;max-width:720px;margin:clamp(36px,4.5vw,60px) auto 0;}
 @keyframes sun-turn {to {transform:rotate(360deg);}}
 @keyframes baby-pop {0% {scale:.72;rotate:-10deg;} 100% {scale:1;rotate:0deg;}}
 @media(max-width:800px){.quote-caption {position:static;width:auto;height:auto;margin:22px 20px 0;overflow:visible;clip-path:none;white-space:normal;text-align:center;}.quote-stage .shelf-arrows {position:static;margin-top:22px;}.book-spread {grid-template-columns:1fr;}.book-spread::after {display:none;}.book-page {min-height:0;padding-bottom:62px;}.book-left {border-radius:14px 14px 0 0;}.book-right {border-radius:0 0 14px 14px;}.book-left .page-number {left:auto;right:24px;}.book-right {--reveal-delay:0ms;}.book-page,.book-right {--swing:-34deg;--hinge:0% 50%;}.doodle-fort,.doodle-homes,.doodle-books,.doodle-peak {margin-top:18px;}.book-photo {margin:8px auto 40px;}.photo-buddy {right:auto;left:-1%;bottom:6px;width:128px;}.doodle-sun {top:12px;right:18px;width:62px;}.summer-buddy {margin-top:10px;}.page-aside {margin-top:30px;}.wonder-buddy {margin-top:14px;}.pizza-baby {position:relative;right:auto;bottom:auto;display:block;width:min(100%,250px);margin:14px auto 0;}.last-page {padding-top:44px;}}
