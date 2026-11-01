@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import AvatarScene from './AvatarScene';
+import { withBase } from '@/lib/utils';
 
 const NAME = [
   { letter: 'N', color: '#ff2e93', tilt: -6 },
@@ -24,7 +25,7 @@ export default function Hero() {
       </h1>
       <p className="hero-tag hero-tag-role" data-drag><span>Engineer &amp; writer</span></p>
       {CHARMS.map(({ name, style, speed }) => (
-        <div key={name} className="hero-charm" style={style} data-speed={speed} suppressHydrationWarning><img src={`/Images/stickers/${name}.webp`} alt="" data-drag draggable={false} /></div>
+        <div key={name} className="hero-charm" style={style} data-speed={speed} suppressHydrationWarning><img src={withBase(`/Images/stickers/${name}.webp`)} alt="" data-drag draggable={false} /></div>
       ))}
       <div className="avatar-stage"><div className="avatar-drift"><AvatarScene /></div></div>
     </section>

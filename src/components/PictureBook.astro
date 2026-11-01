@@ -1,5 +1,6 @@
 ---
 import GiscusComments from '@/components/GiscusComments';
+import { withBase } from '@/lib/utils';
 
 interface Props {
   title: string;
@@ -30,9 +31,9 @@ const loves = loveList.split(', ');
       <h1>{title}</h1>
       <p>by Nisha <time datetime={date.toISOString()}>{date.getFullYear()}</time></p>
     </div>
-    <img class="cover-baby" data-drag src="/Images/baby/hero.webp" width="720" height="720" alt="Nisha as a baby sticker, in a beanie and purple sunglasses" draggable="false" />
-    <img class="cover-charm cover-star" data-drag src="/Images/stickers/star.webp" alt="" aria-hidden="true" draggable="false" />
-    <img class="cover-charm cover-sparkle" data-drag src="/Images/stickers/sparkle.webp" alt="" aria-hidden="true" draggable="false" />
+    <img class="cover-baby" data-drag src={withBase('/Images/baby/hero.webp')} width="720" height="720" alt="Nisha as a baby sticker, in a beanie and purple sunglasses" draggable="false" />
+    <img class="cover-charm cover-star" data-drag src={withBase('/Images/stickers/star.webp')} alt="" aria-hidden="true" draggable="false" />
+    <img class="cover-charm cover-sparkle" data-drag src={withBase('/Images/stickers/sparkle.webp')} alt="" aria-hidden="true" draggable="false" />
   </header>
 
   <article class="book-pages">
@@ -41,16 +42,16 @@ const loves = loveList.split(', ');
         <svg class="doodle doodle-sun" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#ff9d0a" stroke-width="7" stroke-linecap="round"><path d="M60 8v14M60 98v14M8 60h14M98 60h14M23 23l10 10M87 87l10 10M23 97l10-10M87 33l10-10" /></g><circle cx="60" cy="60" r="27" fill="#ffd60f" stroke="#ff9d0a" stroke-width="5" /></svg>
         <h2>A hot summer day</h2>
         <div class="book-text"><p>{story[0]}</p></div>
-        <div class="baby-sticker summer-buddy" data-face="laugh" aria-hidden="true"><img src="/Images/baby/laugh.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="baby-sticker summer-buddy" data-face="laugh" aria-hidden="true"><img src={withBase('/Images/baby/laugh.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
         <span class="page-number">1</span>
       </div>
       <div class="book-page book-right page-sky" data-scroll-reveal>
         <figure class="book-photo" data-drag>
           <span class="tape-bit"></span>
-          <img src="/Images/baby/tiny-me.webp" width="900" height="900" alt="Nisha as a toddler, pulling a funny pouty face" draggable="false" loading="lazy" />
+          <img src={withBase('/Images/baby/tiny-me.webp')} width="900" height="900" alt="Nisha as a toddler, pulling a funny pouty face" draggable="false" loading="lazy" />
           <figcaption>Tiny me</figcaption>
         </figure>
-        <div class="baby-sticker photo-buddy" data-face="wow" aria-hidden="true"><img src="/Images/baby/wow.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="baby-sticker photo-buddy" data-face="wow" aria-hidden="true"><img src={withBase('/Images/baby/wow.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
         <span class="page-number">2</span>
       </div>
     </section>
@@ -71,7 +72,7 @@ const loves = loveList.split(', ');
           <circle cx="110" cy="214" r="17" fill="#fff7e8" stroke="#1e1433" stroke-width="5" /><circle cx="310" cy="214" r="17" fill="#fff7e8" stroke="#1e1433" stroke-width="5" />
           <path d="M14 280c120-10 270-10 392 0" fill="none" stroke="#3aa655" stroke-width="9" stroke-linecap="round" />
         </svg>
-        <div class="baby-sticker fort-buddy" data-face="thumbs" aria-hidden="true"><img src="/Images/baby/thumbs.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="baby-sticker fort-buddy" data-face="thumbs" aria-hidden="true"><img src={withBase('/Images/baby/thumbs.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
         </div>
         <div class="book-text page-aside"><p>{story[2]}</p></div>
         <span class="page-number">4</span>
@@ -98,7 +99,7 @@ const loves = loveList.split(', ');
       <div class="book-page book-right" data-scroll-reveal>
         <h2>Books and words</h2>
         <div class="book-text">
-          <div class="baby-sticker text-buddy" data-face="think" aria-hidden="true"><img src="/Images/baby/think.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+          <div class="baby-sticker text-buddy" data-face="think" aria-hidden="true"><img src={withBase('/Images/baby/think.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
           <p>{story[4]}</p>
           <p>{story[5]}</p>
         </div>
@@ -114,11 +115,11 @@ const loves = loveList.split(', ');
       <div class="book-page book-left page-pink" data-scroll-reveal>
         <h2>Things I love</h2>
         <div class="book-text love-page">
-          <div class="baby-sticker text-buddy" data-face="love" aria-hidden="true"><img src="/Images/baby/love.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+          <div class="baby-sticker text-buddy" data-face="love" aria-hidden="true"><img src={withBase('/Images/baby/love.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
           <ul class="love-list">{loves.map(thing => <li>{thing}</li>)}</ul>
           <p>{loveEnd}</p>
         </div>
-        <img class="pizza-baby" data-drag src="/Images/baby/pizza.webp" width="812" height="928" alt="Nisha as a baby sticker, eating a slice of pizza" draggable="false" loading="lazy" />
+        <img class="pizza-baby" data-drag src={withBase('/Images/baby/pizza.webp')} width="812" height="928" alt="Nisha as a baby sticker, eating a slice of pizza" draggable="false" loading="lazy" />
         <span class="page-number">7</span>
       </div>
       <div class="book-page book-right" data-scroll-reveal>
@@ -145,11 +146,11 @@ const loves = loveList.split(', ');
           <p class="big-line">{story[10]}</p>
           <p>{story[11]}</p>
         </div>
-        <div class="baby-sticker wonder-buddy" data-face="wow" aria-hidden="true"><img src="/Images/baby/wow.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="baby-sticker wonder-buddy" data-face="wow" aria-hidden="true"><img src={withBase('/Images/baby/wow.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
         <span class="page-number">9</span>
       </div>
       <div class="book-page book-right page-sky last-page" data-scroll-reveal>
-        <div class="baby-sticker last-buddy" data-face="smile" aria-hidden="true"><img src="/Images/baby/smile.webp" width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="baby-sticker last-buddy" data-face="smile" aria-hidden="true"><img src={withBase('/Images/baby/smile.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
         <div class="book-text"><p class="big-line">{story[12]}</p></div>
         <p class="to-be-continued">to be continued...</p>
         <span class="page-number">10</span>

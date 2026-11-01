@@ -1,4 +1,5 @@
 import { makeDraggable } from './draggable';
+import { withBase } from '@/lib/utils';
 
 const STAMPS = ['star', 'heart', 'sparkle', 'rocket'];
 const MAX_STAMPS = 10;
@@ -50,7 +51,7 @@ function stampOnClick() {
     if (target.closest('a,button,input,textarea,canvas,[data-drag],.mood-sticker,.baby-sticker,.book-text,.shelf-rail,[role=dialog],.prose,.sky-nav')) return;
     if (getSelection()?.toString()) return;
     const stamp = document.createElement('img');
-    stamp.src = `/Images/stickers/${STAMPS[Math.floor(Math.random() * STAMPS.length)]}.webp`;
+    stamp.src = withBase(`/Images/stickers/${STAMPS[Math.floor(Math.random() * STAMPS.length)]}.webp`);
     stamp.alt = '';
     stamp.className = 'click-stamp';
     stamp.setAttribute('aria-hidden', 'true');
@@ -143,12 +144,12 @@ function jobRoad() {
 // The baby stickers in the picture book: pull one around, or tap it for the next face.
 function babyStickers() {
   const stickers = [...document.querySelectorAll<HTMLElement>('.baby-sticker')];
-  if (stickers.length) BABY_FACES.forEach(face => { new Image().src = `/Images/baby/${face}.webp`; });
+  if (stickers.length) BABY_FACES.forEach(face => { new Image().src = withBase(`/Images/baby/${face}.webp`); });
   return stickers.map(sticker => makeDraggable(sticker, {
     onTap: () => {
       const face = BABY_FACES[(BABY_FACES.indexOf(sticker.dataset.face!) + 1) % BABY_FACES.length];
       sticker.dataset.face = face;
-      sticker.querySelector('img')!.src = `/Images/baby/${face}.webp`;
+      sticker.querySelector('img')!.src = withBase(`/Images/baby/${face}.webp`);
       sticker.classList.remove('is-swapping');
       void sticker.offsetWidth;
       sticker.classList.add('is-swapping');

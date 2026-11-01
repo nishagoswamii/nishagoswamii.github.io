@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Sticker from '@/components/Sticker';
 import StickerTitle from '@/components/StickerTitle';
+import { withBase } from '@/lib/utils';
 import type { Mood } from '@/data/moods';
 
 interface Props {
@@ -29,7 +30,7 @@ const tag = (status: string) => status === 'reading' || status === 'watching' ? 
     {reviews.map(review => <article class="note shelf-card">
       <div class="note-face">
         <span class="tape-bit" aria-hidden="true"></span>
-        {review.data.cover && <img class="shelf-cover" src={review.data.cover.trim()} alt="" loading="lazy" draggable="false" />}
+        {review.data.cover && <img class="shelf-cover" src={withBase(review.data.cover.trim())} alt="" loading="lazy" draggable="false" />}
         {review.data.status !== 'completed' && <span class="shelf-tag">{tag(review.data.status)}</span>}
         <strong>{review.data.title}</strong>
         <span class="shelf-by">{review.data.author ?? review.data.director}</span>

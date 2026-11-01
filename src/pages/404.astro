@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import Sticker from '@/components/Sticker';
 import StickerTitle from '@/components/StickerTitle';
 import { projects } from '@/data/portfolioData';
+import { withBase } from '@/lib/utils';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).map(post => ({ title: post.data.title, slug: post.slug }));
 const searchProjects = projects.map(p => ({ id: p.id, title: p.title, githubUrl: p.githubUrl }));
@@ -18,7 +19,7 @@ const searchProjects = projects.map(p => ({ id: p.id, title: p.title, githubUrl:
           <StickerTitle text="Oops!" as="h1" />
           <div class="section-sticker"><Sticker mood="wow" react="laugh" /></div>
           <p class="lost-text">This page doesn't exist. It may have moved, or the link has a typo.</p>
-          <a class="shelf-link lost-link" href="/">Back home →</a>
+          <a class="shelf-link lost-link" href={withBase('/')}>Back home →</a>
        </section>
     </main>
     <Footer />

@@ -8,6 +8,7 @@ import GiscusComments from '@/components/GiscusComments';
 
 import PictureBook from '@/components/PictureBook.astro';
 import { projects } from '@/data/portfolioData';
+import { withBase } from '@/lib/utils';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -39,11 +40,11 @@ const searchProjects = projects.map(p => ({
     {post.slug === 'my-journey' ? <PictureBook title={post.data.title} date={post.data.pubDate} body={post.body} /> : (
 	<main class="relative z-10 min-h-screen">
         <article class="post">
-            <a class="post-back" href="/blog">← All writing</a>
+            <a class="post-back" href={withBase('/blog')}>← All writing</a>
             <header class="post-header">
                 <h1>{post.data.title}</h1>
                 <time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}</time>
-                {post.data.heroImage && <img class="post-hero" width={1020} height={510} src={post.data.heroImage} alt="" />}
+                {post.data.heroImage && <img class="post-hero" width={1020} height={510} src={withBase(post.data.heroImage)} alt="" />}
             </header>
 
             <div class="prose prose-lg post-body prose-headings:font-serif prose-headings:font-medium prose-a:text-primary prose-blockquote:border-primary prose-blockquote:font-serif prose-blockquote:text-2xl">

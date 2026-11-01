@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type * as T from 'three';
+import { withBase } from '@/lib/utils';
 
-const ASSETS = '/Images/avatar';
+const ASSETS = withBase('/Images/avatar');
 const SIZE = 1430;
 const BPM = 104;
 // Pixel positions of the charms inside portrait.webp.

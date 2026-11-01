@@ -1,3 +1,4 @@
+import { withBase } from '@/lib/utils';
 export interface Project {
   id: number;
   title: string;
@@ -23,8 +24,8 @@ export const projects: Project[] = [
     short: "AI resume analyzer",
     summary: "An AI-powered resume analyzer that turns complex CVs and job descriptions into structured, actionable feedback for job seekers.",
     images: [
-      "/Images/hireflowly_landing_page.webp",
-      "/Images/hireflowly_action.webp"
+      withBase("/Images/hireflowly_landing_page.webp"),
+      withBase("/Images/hireflowly_action.webp")
     ],
     tags: [ "TypeScript", "Supabase", "Vitest", "AI Semantic Matching"],
     details: {
@@ -50,7 +51,7 @@ export const projects: Project[] = [
     short: "Real-time computer vision",
     summary: "A real-time computer vision system to detect driver drowsiness using YOLO and PyTorch.",
     images: [
-      "/Images/DDS.webp",
+      withBase("/Images/DDS.webp"),
     ],
     tags: ["YOLO", "PyTorch", "Computer Vision", "Real-Time Detection", "AI"],
     details: {

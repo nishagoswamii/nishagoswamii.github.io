@@ -15,6 +15,7 @@ import StickerTitle from '@/components/StickerTitle';
 import { config } from '../data/config';
 import { getCollection } from 'astro:content';
 import { projects } from '@/data/portfolioData';
+import { withBase } from '@/lib/utils';
 
 const entries = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -55,11 +56,11 @@ const searchProjects = projects.map(p => ({
       <StickerTitle text="Writing" />
       <div class="section-sticker"><Sticker mood="think" react="laugh" /></div>
       <div class="note-board">
-        {entries.filter(post => post.slug !== 'coming-soon').slice(0, 3).map((post, index) => <div data-scroll-reveal style={`--reveal-delay:${index * 110}ms`}><a class="note" href={`/blog/${post.slug}`} data-drag draggable="false">
+        {entries.filter(post => post.slug !== 'coming-soon').slice(0, 3).map((post, index) => <div data-scroll-reveal style={`--reveal-delay:${index * 110}ms`}><a class="note" href={withBase(`/blog/${post.slug}`)} data-drag draggable="false">
           <span class="note-face"><span class="tape-bit" aria-hidden="true"></span><strong>{post.data.title}</strong><span class="note-meta"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.getFullYear()}</time><span aria-hidden="true">↗</span></span></span>
         </a></div>)}
       </div>
-      <a class="shelf-link" href="/blog">All writing →</a>
+      <a class="shelf-link" href={withBase('/blog')}>All writing →</a>
     </section>
     <Shelf type="book" id="books" title="Books" sheet="sheet-purple" mood="wow" />
     <Shelf type="movie" id="movies" title="Movies" sheet="sheet-sky" mood="laugh" link={{ href: 'https://boxd.it/jEtdF', label: 'My Letterboxd →' }} />
@@ -69,7 +70,7 @@ const searchProjects = projects.map(p => ({
     </section>
   </main>
   <Footer />
-  <a class="scroll-star" href="#home" aria-label="Back to top"><img src="/Images/stickers/star.webp" alt="" /></a>
+  <a class="scroll-star" href="#home" aria-label="Back to top"><img src={withBase('/Images/stickers/star.webp')} alt="" /></a>
   <script is:inline>
     (function () {
       var root = document.documentElement;

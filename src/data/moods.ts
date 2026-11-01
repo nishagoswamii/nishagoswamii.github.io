@@ -1,4 +1,5 @@
-export const MOOD_PATH = '/Images/moods';
+import { withBase } from '@/lib/utils';
+export const MOOD_PATH = withBase('/Images/moods');
 
 // `origin` is where each mood's accent shapes sit, as a percentage of the sticker.
 export const MOODS = {

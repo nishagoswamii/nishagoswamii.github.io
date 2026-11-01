@@ -9,6 +9,7 @@ import {
     CommandSeparator,
 } from './ui/command';
 import { FileText, Github, Home, Layout, Radio, User } from 'lucide-react';
+import { withBase } from '@/lib/utils';
 
 interface LinkItem {
     name: string;
@@ -49,27 +50,27 @@ export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }:
                 <CommandEmpty>No results found.</CommandEmpty>
 
                 <CommandGroup heading="Explore">
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/'))}>
                         <Home className="mr-2 h-4 w-4" />
                         Home
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/blog/my-journey')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/blog/my-journey'))}>
                         <User className="mr-2 h-4 w-4" />
                         About
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/projects')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/projects'))}>
                         <Layout className="mr-2 h-4 w-4" />
                         Projects
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/blog')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/blog'))}>
                         <FileText className="mr-2 h-4 w-4" />
                         Writing
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/#contact')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/#contact'))}>
                         <Radio className="mr-2 h-4 w-4" />
                         Say hello
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.open('/resume.pdf', '_blank'))}>
+                    <CommandItem onSelect={() => runCommand(() => window.open(withBase('/resume.pdf'), '_blank'))}>
                         <FileText className="mr-2 h-4 w-4" />
                         Resume
                     </CommandItem>
@@ -93,7 +94,7 @@ export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }:
                 {posts.length > 0 && (
                     <CommandGroup heading="Writing">
                         {posts.map((post) => (
-                            <CommandItem key={post.slug} onSelect={() => runCommand(() => window.location.href = `/blog/${post.slug}`)}>
+                            <CommandItem key={post.slug} onSelect={() => runCommand(() => window.location.href = withBase(`/blog/${post.slug}`))}>
                                 <FileText className="mr-2 h-4 w-4" />
                                 {post.title}
                             </CommandItem>
