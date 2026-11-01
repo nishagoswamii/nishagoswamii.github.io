@@ -1,5 +1,6 @@
 import { makeDraggable } from './draggable';
 import { withBase } from '@/lib/utils';
+import { footerDrop } from './footer-drop';
 
 const STAMPS = ['star', 'heart', 'sparkle', 'rocket'];
 const MAX_STAMPS = 10;
@@ -48,7 +49,7 @@ function stampOnClick() {
   const click = (event: MouseEvent) => {
     const target = event.target as Element;
     if (document.documentElement.classList.contains('intro-playing')) return;
-    if (target.closest('a,button,input,textarea,canvas,[data-drag],.mood-sticker,.baby-sticker,.book-text,.shelf-rail,[role=dialog],.prose,.sky-nav')) return;
+    if (target.closest('a,button,input,textarea,canvas,[data-drag],.mood-sticker,.baby-sticker,.book-text,.shelf-rail,[role=dialog],.prose,.sky-nav,.site-footer')) return;
     if (getSelection()?.toString()) return;
     const stamp = document.createElement('img');
     stamp.src = withBase(`/Images/stickers/${STAMPS[Math.floor(Math.random() * STAMPS.length)]}.webp`);
@@ -97,7 +98,7 @@ function jobRoad() {
   const dots = cards.slice(1).map(() => add('path', 'road-dots'));
   const pins = cards.map((_, index) => { const pin = add('use', `road-pin road-pin-${index % 2}`); pin.setAttribute('href', '#road-pin'); return pin; });
   const stacked = matchMedia('(max-width:800px)');
-  let frame = 0;
+  let frame = 0, followUntil = 0;
   const draw = () => {
     frame = 0;
     const origin = grid.getBoundingClientRect();
@@ -126,19 +127,36 @@ function jobRoad() {
       if (!index) pins[0].setAttribute('transform', `translate(${startX} ${startY})`);
       pins[index + 1].setAttribute('transform', `translate(${endX} ${endY})`);
     });
+    if (performance.now() < followUntil) schedule();
   };
   const schedule = () => { if (!frame) frame = requestAnimationFrame(draw); };
+  // The road shows before the cards finish landing, so it follows them while they move.
+  const follow = () => { followUntil = performance.now() + 1500; schedule(); };
   const resize = new ResizeObserver(schedule); resize.observe(grid);
   const moved = new MutationObserver(schedule);
   cards.forEach(card => moved.observe(card, { attributes: true, attributeFilter: ['style'] }));
-  grid.addEventListener('transitionend', schedule);
+  grid.addEventListener('transitionrun', follow);
   stacked.addEventListener('change', schedule);
   draw();
   return () => {
     cancelAnimationFrame(frame); resize.disconnect(); moved.disconnect();
-    grid.removeEventListener('transitionend', schedule); stacked.removeEventListener('change', schedule);
+    grid.removeEventListener('transitionrun', follow); stacked.removeEventListener('change', schedule);
     [...dots, ...pins].forEach(el => el.remove());
   };
+}
+
+// The footer doodles boil like hand-drawn animation: a new noise seed ten times a second, only while the footer is on screen.
+function footerBoil(reduced: boolean) {
+  const footer = document.querySelector<HTMLElement>('.site-footer');
+  const noise = footer?.querySelector('#footer-boil feTurbulence');
+  if (!footer || !noise || reduced) return () => {};
+  let timer = 0;
+  const seen = new IntersectionObserver(([entry]) => {
+    clearInterval(timer);
+    if (entry.isIntersecting) timer = window.setInterval(() => noise.setAttribute('seed', String(Math.floor(Math.random() * 1000))), 100);
+  });
+  seen.observe(footer);
+  return () => { clearInterval(timer); seen.disconnect(); };
 }
 
 // The baby stickers in the picture book: pull one around, or tap it for the next face.
@@ -185,6 +203,8 @@ document.addEventListener('astro:page-load', () => {
     stampOnClick(),
     cycleImages(reduced),
     jobRoad(),
+    footerBoil(reduced),
+    footerDrop(reduced),
     ...[...document.querySelectorAll('.book-section:has(.shelf-rail)')].map(section => shelfRail(section, reduced)),
     ...babyStickers(),
     ...[...document.querySelectorAll<HTMLElement>('[data-drag]')].map(el => makeDraggable(el)),

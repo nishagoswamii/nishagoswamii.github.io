@@ -82,12 +82,10 @@ function setup(sticker: HTMLElement, reduced: boolean) {
     if (!link || next?.closest?.('a') === link) return;
     hovering = false; backToRest(260);
   };
-  const clicked = (event: Event) => { if ((event.target as Element).closest?.('.contact-mail')) { hovering = false; flash('thumbs', 1800); } };
   section?.addEventListener('pointerover', over);
   section?.addEventListener('pointerout', out);
   section?.addEventListener('focusin', over);
   section?.addEventListener('focusout', out);
-  section?.addEventListener('click', clicked);
 
   // Tilt toward the pointer, like a card held in the hand.
   const tilt = (event: PointerEvent) => {
@@ -113,7 +111,6 @@ function setup(sticker: HTMLElement, reduced: boolean) {
     section?.removeEventListener('pointerout', out);
     section?.removeEventListener('focusin', over);
     section?.removeEventListener('focusout', out);
-    section?.removeEventListener('click', clicked);
   };
 }
 

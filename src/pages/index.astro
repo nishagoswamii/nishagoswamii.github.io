@@ -8,7 +8,6 @@ import Hero from '@/components/Hero';
 import Experience from '@/components/Experience';
 import Shelf from '@/components/Shelf.astro';
 import QuoteBoard from '@/components/QuoteBoard';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import Sticker from '@/components/Sticker';
 import StickerTitle from '@/components/StickerTitle';
@@ -59,12 +58,14 @@ const searchProjects = projects.map(p => ({
         {entries.filter(post => post.slug !== 'coming-soon').slice(0, 3).map((post, index) => <div data-scroll-reveal style={`--reveal-delay:${index * 110}ms`}><a class="note" href={withBase(`/blog/${post.slug}`)} data-drag draggable="false">
           <span class="note-face"><span class="tape-bit" aria-hidden="true"></span><strong>{post.data.title}</strong><span class="note-meta"><time datetime={post.data.pubDate.toISOString()}>{post.data.pubDate.getFullYear()}</time><span aria-hidden="true">↗</span></span></span>
         </a></div>)}
+        <a class="stamp-link" href={withBase('/blog')} aria-label="All writing">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><defs><path id="stamp-circle" d="M50 50m-39 0a39 39 0 1 1 78 0a39 39 0 1 1-78 0"></path></defs><text><textPath href="#stamp-circle" textLength="240">all writing ✦ all writing ✦</textPath></text></svg>
+          <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <a class="shelf-link" href={withBase('/blog')}>All writing →</a>
     </section>
     <Shelf type="book" id="books" title="Books" sheet="sheet-purple" mood="wow" />
     <Shelf type="movie" id="movies" title="Movies" sheet="sheet-sky" mood="laugh" link={{ href: 'https://boxd.it/jEtdF', label: 'My Letterboxd →' }} />
-    <Contact />
     <section class="quote-full" id="quotes" aria-label="Quotes">
       <QuoteBoard client:visible />
     </section>
