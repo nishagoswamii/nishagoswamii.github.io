@@ -1,7 +1,9 @@
+import { withBase } from '@/lib/utils';
 export interface Project {
   id: number;
   title: string;
   summary: string;
+  short: string;
   images: string[];
   tags: string[];
   details: {
@@ -19,10 +21,11 @@ export const projects: Project[] = [
   {
     id: 1,
     title: "HireFlowly",
-    summary: "HireFlowly is an intelligent, AI-powered resume analyzer designed to streamline the evaluation and optimization of professional CVs. By leveraging advanced natural language processing, the platform automatically parses uploaded resumes to extract key skills, experiences, and formatting details. It serves as a highly valuable tool for job seekers who want to improve their Applicant Tracking System (ATS) compatibility through targeted, data-driven feedback.",
+    short: "AI resume analyzer",
+    summary: "An AI-powered resume analyzer that turns complex CVs and job descriptions into structured, actionable feedback for job seekers.",
     images: [
-      "/Images/hireflowly_landing_page.png",
-      "/Images/hireflowly_action.png"
+      withBase("/Images/hireflowly_landing_page.webp"),
+      withBase("/Images/hireflowly_action.webp")
     ],
     tags: [ "TypeScript", "Supabase", "Vitest", "AI Semantic Matching"],
     details: {
@@ -45,9 +48,10 @@ export const projects: Project[] = [
   {
     id: 2,
     title: "Drowsiness Detection System",
+    short: "Real-time computer vision",
     summary: "A real-time computer vision system to detect driver drowsiness using YOLO and PyTorch.",
     images: [
-      "/Images/DDS.png",
+      withBase("/Images/DDS.webp"),
     ],
     tags: ["YOLO", "PyTorch", "Computer Vision", "Real-Time Detection", "AI"],
     details: {

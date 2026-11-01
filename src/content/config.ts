@@ -21,12 +21,12 @@ const reviews = defineCollection({
     schema: z.object({
         title: z.string(),
         type: z.enum(['book', 'movie']),
-        rating: z.number().min(1).max(5),
+        rating: z.number().min(1).max(5).optional(),
         status: z.enum(['reading', 'watching', 'completed', 'dropped', 'plan_to_read', 'plan_to_watch']),
         cover: z.string().optional(),
         author: z.string().optional(),
         director: z.string().optional(),
-        pubDate: z.coerce.date(),
+        pubDate: z.coerce.date().optional(),
     }),
 });
 

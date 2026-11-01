@@ -64,12 +64,14 @@
     "tailwind-merge": "^2.6.1",
     "tailwindcss": "^3.4.13",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.180.0",
     "vaul": "^1.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^22.13.1",
     "@types/react": "^18.3.18",
+    "@types/three": "^0.180.0",
     "typescript": "^5.7.3"
   }
 }

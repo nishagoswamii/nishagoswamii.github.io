@@ -8,7 +8,8 @@ import {
     CommandList,
     CommandSeparator,
 } from './ui/command';
-import { FileText, Github, Home, Layout, User } from 'lucide-react';
+import { FileText, Github, Home, Layout, Radio, User } from 'lucide-react';
+import { withBase } from '@/lib/utils';
 
 interface LinkItem {
     name: string;
@@ -35,6 +36,7 @@ interface SearchCommandProps {
 
 export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }: SearchCommandProps) {
     const [query, setQuery] = React.useState('');
+    const linkedProjects = projects.filter(project => project.githubUrl);
 
     const runCommand = React.useCallback((command: () => unknown) => {
         onOpenChange(false);
@@ -43,41 +45,43 @@ export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }:
 
     return (
         <CommandDialog open={open} onOpenChange={onOpenChange}>
-            <CommandInput placeholder="Type a command or search..." value={query} onValueChange={setQuery} />
+            <CommandInput placeholder="Search projects, writing, and more..." value={query} onValueChange={setQuery} />
             <CommandList className="thin-scrollbar">
                 <CommandEmpty>No results found.</CommandEmpty>
 
-                <CommandGroup heading="Pages">
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/')}>
+                <CommandGroup heading="Explore">
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/'))}>
                         <Home className="mr-2 h-4 w-4" />
                         Home
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/blog/my-journey')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/blog/my-journey'))}>
                         <User className="mr-2 h-4 w-4" />
                         About
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/#projects')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/projects'))}>
                         <Layout className="mr-2 h-4 w-4" />
                         Projects
                     </CommandItem>
-                    <CommandItem onSelect={() => runCommand(() => window.location.href = '/blog')}>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/blog'))}>
                         <FileText className="mr-2 h-4 w-4" />
-                        Blog
+                        Writing
+                    </CommandItem>
+                    <CommandItem onSelect={() => runCommand(() => window.location.href = withBase('/#contact'))}>
+                        <Radio className="mr-2 h-4 w-4" />
+                        Say hello
+                    </CommandItem>
+                    <CommandItem onSelect={() => runCommand(() => window.open(withBase('/resume.pdf'), '_blank'))}>
+                        <FileText className="mr-2 h-4 w-4" />
+                        Resume
                     </CommandItem>
                 </CommandGroup>
 
                 <CommandSeparator />
 
-                {projects.length > 0 && (
+                {linkedProjects.length > 0 && (
                     <CommandGroup heading="Projects">
-                        {projects.map((project) => (
-                            <CommandItem key={project.id} onSelect={() => runCommand(() => {
-                                if (project.githubUrl) {
-                                    window.open(project.githubUrl, '_blank');
-                                } else {
-                                    window.location.href = '/#projects';
-                                }
-                            })}>
+                        {linkedProjects.map((project) => (
+                            <CommandItem key={project.id} onSelect={() => runCommand(() => window.open(project.githubUrl, '_blank'))}>
                                 <Github className="mr-2 h-4 w-4" />
                                 {project.title}
                             </CommandItem>
@@ -88,9 +92,9 @@ export function SearchCommand({ open, onOpenChange, posts = [], projects = [] }:
                 <CommandSeparator />
 
                 {posts.length > 0 && (
-                    <CommandGroup heading="Blog Posts">
+                    <CommandGroup heading="Writing">
                         {posts.map((post) => (
-                            <CommandItem key={post.slug} onSelect={() => runCommand(() => window.location.href = `/blog/${post.slug}`)}>
+                            <CommandItem key={post.slug} onSelect={() => runCommand(() => window.location.href = withBase(`/blog/${post.slug}`))}>
                                 <FileText className="mr-2 h-4 w-4" />
                                 {post.title}
                             </CommandItem>

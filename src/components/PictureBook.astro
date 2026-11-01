@@ -1,0 +1,159 @@
+---
+import { withBase } from '@/lib/utils';
+
+interface Props {
+  title: string;
+  date: Date;
+  body: string;
+}
+
+const { title, date, body } = Astro.props;
+
+// Her words stay in my-journey.md. Pages below pick paragraphs by position, so a new paragraph there needs a place here too.
+const story = body.split(/\n\s*\n/).map(text => text.trim()).filter(Boolean);
+const [, loveList, loveEnd] = story[6].match(/^.*? love (.*) (and a lot more stuffs\.+)$/) ?? [];
+const loves = loveList.split(', ');
+---
+
+<main class="picture-book">
+  <svg class="crayon-defs" width="0" height="0" aria-hidden="true">
+    <filter id="crayon"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" /><feDisplacementMap in="SourceGraphic" scale="4" /></filter>
+    <symbol id="doodle-cloud" viewBox="0 0 200 100"><path d="M40 86c-26 0-34-30-12-40 0-24 34-34 48-14 14-22 52-16 54 12 28-4 42 38 12 42z" fill="#fff" /></symbol>
+  </svg>
+
+  <svg class="sky-cloud sky-cloud-1" aria-hidden="true"><use href="#doodle-cloud" /></svg>
+  <svg class="sky-cloud sky-cloud-2" aria-hidden="true"><use href="#doodle-cloud" /></svg>
+  <svg class="sky-cloud sky-cloud-3" aria-hidden="true"><use href="#doodle-cloud" /></svg>
+
+  <header class="book-cover">
+    <div class="book-plate">
+      <h1>{title}</h1>
+      <p>by Nisha <time datetime={date.toISOString()}>{date.getFullYear()}</time></p>
+    </div>
+    <img class="cover-baby" data-drag src={withBase('/Images/baby/hero.webp')} width="720" height="720" alt="Nisha as a baby sticker, in a beanie and purple sunglasses" draggable="false" />
+    <img class="cover-charm cover-star" data-drag src={withBase('/Images/stickers/star.webp')} alt="" aria-hidden="true" draggable="false" />
+    <img class="cover-charm cover-sparkle" data-drag src={withBase('/Images/stickers/sparkle.webp')} alt="" aria-hidden="true" draggable="false" />
+  </header>
+
+  <article class="book-pages">
+    <section class="book-spread">
+      <div class="book-page book-left" data-scroll-reveal>
+        <svg class="doodle doodle-sun" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#ff9d0a" stroke-width="7" stroke-linecap="round"><path d="M60 8v14M60 98v14M8 60h14M98 60h14M23 23l10 10M87 87l10 10M23 97l10-10M87 33l10-10" /></g><circle cx="60" cy="60" r="27" fill="#ffd60f" stroke="#ff9d0a" stroke-width="5" /></svg>
+        <h2>A hot summer day</h2>
+        <div class="book-text"><p>{story[0]}</p></div>
+        <div class="baby-sticker summer-buddy" data-face="laugh" aria-hidden="true"><img src={withBase('/Images/baby/laugh.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <span class="page-number">1</span>
+      </div>
+      <div class="book-page book-right page-sky" data-scroll-reveal>
+        <figure class="book-photo" data-drag>
+          <span class="tape-bit"></span>
+          <img src={withBase('/Images/baby/tiny-me.webp')} width="900" height="900" alt="Nisha as a toddler, pulling a funny pouty face" draggable="false" loading="lazy" />
+          <figcaption>Tiny me</figcaption>
+        </figure>
+        <div class="baby-sticker photo-buddy" data-face="wow" aria-hidden="true"><img src={withBase('/Images/baby/wow.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <span class="page-number">2</span>
+      </div>
+    </section>
+
+    <section class="book-spread">
+      <div class="book-page book-left" data-scroll-reveal>
+        <h2>Story games</h2>
+        <div class="book-text"><p>{story[1]}</p></div>
+        <span class="page-number">3</span>
+      </div>
+      <div class="book-page book-right page-yellow" data-scroll-reveal>
+        <div class="fort-scene">
+        <svg class="doodle doodle-fort" viewBox="0 0 420 300" role="img" aria-label="A crayon drawing of a cardboard fort">
+          <path d="M210 72V16" fill="none" stroke="#1e1433" stroke-width="6" stroke-linecap="round" /><path d="M212 18l54 16-54 18z" fill="#e8222e" stroke="#1e1433" stroke-width="5" stroke-linejoin="round" />
+          <path d="M60 276V112h40V82h44v30h44V82h44v30h44V82h44v30h40v164z" fill="#dfa964" stroke="#1e1433" stroke-width="6" stroke-linejoin="round" />
+          <path d="M60 170h300M130 112v58M280 112v58" fill="none" stroke="#a9733a" stroke-width="4" stroke-dasharray="14 10" stroke-linecap="round" />
+          <path d="M172 276v-62c0-46 76-46 76 0v62z" fill="#1e1433" />
+          <circle cx="110" cy="214" r="17" fill="#fff7e8" stroke="#1e1433" stroke-width="5" /><circle cx="310" cy="214" r="17" fill="#fff7e8" stroke="#1e1433" stroke-width="5" />
+          <path d="M14 280c120-10 270-10 392 0" fill="none" stroke="#3aa655" stroke-width="9" stroke-linecap="round" />
+        </svg>
+        <div class="baby-sticker fort-buddy" data-face="thumbs" aria-hidden="true"><img src={withBase('/Images/baby/thumbs.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        </div>
+        <div class="book-text page-aside"><p>{story[2]}</p></div>
+        <span class="page-number">4</span>
+      </div>
+    </section>
+
+    <section class="book-spread">
+      <div class="book-page book-left" data-scroll-reveal>
+        <h2>Two homes</h2>
+        <div class="book-text"><p>{story[3]}</p></div>
+        <svg class="doodle doodle-homes" viewBox="14 0 432 262" role="img" aria-label="A crayon drawing of a dotted road between a house with a tree and a house in the city, under a cloud and two birds">
+          <path transform="translate(62 2) scale(.74)" d="M40 86c-26 0-34-30-12-40 0-24 34-34 48-14 14-22 52-16 54 12 28-4 42 38 12 42z" fill="#fff" stroke="#1e1433" stroke-width="7" stroke-linejoin="round" />
+          <path d="M232 62q12-13 23 0q11-13 23 0M272 92q8-9 16 0q8-9 16 0" fill="none" stroke="#1e1433" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          <g transform="translate(0 82)">
+            <path d="M26 100c0-34 44-34 44 0 0 26-44 26-44 0z" fill="#3aa655" stroke="#1e1433" stroke-width="5" /><path d="M48 124v44" stroke="#1e1433" stroke-width="7" stroke-linecap="round" />
+            <path d="M84 168v-70l50-38 50 38v70z" fill="#ffc2df" stroke="#1e1433" stroke-width="5" stroke-linejoin="round" /><path d="M120 168v-38h28v38" fill="#fff7e8" stroke="#1e1433" stroke-width="5" />
+            <path d="M190 150c44-34 76 22 118-4" fill="none" stroke="#6c2bd9" stroke-width="6" stroke-dasharray="2 15" stroke-linecap="round" />
+            <path d="M320 168V-16h66v184zM386 168V84h50v84z" fill="#b9e5ff" stroke="#1e1433" stroke-width="5" stroke-linejoin="round" />
+            <path d="M338 6h12M362 6h12M338 34h12M362 34h12M338 62h12M362 62h12M338 90h12M362 90h12M338 118h12M362 118h12M404 106h14M404 132h14" stroke="#1e1433" stroke-width="7" stroke-linecap="round" />
+          </g>
+        </svg>
+        <span class="page-number">5</span>
+      </div>
+      <div class="book-page book-right" data-scroll-reveal>
+        <h2>Books and words</h2>
+        <div class="book-text">
+          <div class="baby-sticker text-buddy" data-face="think" aria-hidden="true"><img src={withBase('/Images/baby/think.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+          <p>{story[4]}</p>
+          <p>{story[5]}</p>
+        </div>
+        <svg class="doodle doodle-books" viewBox="0 0 300 130" role="img" aria-label="A crayon drawing of a stack of books">
+          <g stroke="#1e1433" stroke-width="5" stroke-linejoin="round"><rect x="30" y="88" width="220" height="32" rx="5" fill="#2fa8f5" /><rect x="52" y="52" width="196" height="36" rx="5" fill="#ff2e93" /><rect x="40" y="20" width="170" height="32" rx="5" fill="#ffd60f" /></g>
+          <path d="M60 104h60M84 70h44M66 36h36" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+        </svg>
+        <span class="page-number">6</span>
+      </div>
+    </section>
+
+    <section class="book-spread">
+      <div class="book-page book-left page-pink" data-scroll-reveal>
+        <h2>Things I love</h2>
+        <div class="book-text love-page">
+          <div class="baby-sticker text-buddy" data-face="love" aria-hidden="true"><img src={withBase('/Images/baby/love.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+          <ul class="love-list">{loves.map(thing => <li>{thing}</li>)}</ul>
+          <p>{loveEnd}</p>
+        </div>
+        <img class="pizza-baby" data-drag src={withBase('/Images/baby/pizza.webp')} width="812" height="928" alt="Nisha as a baby sticker, eating a slice of pizza" draggable="false" loading="lazy" />
+        <span class="page-number">7</span>
+      </div>
+      <div class="book-page book-right" data-scroll-reveal>
+        <h2>A line I keep</h2>
+        <div class="book-text">
+          <p>{story[7]}</p>
+          <blockquote>{story[8]}</blockquote>
+          <p>{story[9]}</p>
+        </div>
+        <svg class="doodle doodle-peak" viewBox="0 0 420 170" role="img" aria-label="A crayon drawing of a dotted trail climbing a mountain to a flag">
+          <path d="M8 162L132 40l66 66 54-54 160 110z" fill="#cfc2ff" stroke="#1e1433" stroke-width="5" stroke-linejoin="round" />
+          <path d="M104 68l28-28 28 28-14 10-14-12-14 12z" fill="#fff" stroke="#1e1433" stroke-width="4" stroke-linejoin="round" />
+          <path d="M28 158c44-6 40-40 70-44s18-40 34-72" fill="none" stroke="#ff2e93" stroke-width="6" stroke-dasharray="2 13" stroke-linecap="round" />
+          <path d="M132 40V8" stroke="#1e1433" stroke-width="5" stroke-linecap="round" /><path d="M134 8l28 10-28 10z" fill="#ffd60f" stroke="#1e1433" stroke-width="4" stroke-linejoin="round" />
+        </svg>
+        <span class="page-number">8</span>
+      </div>
+    </section>
+
+    <section class="book-spread">
+      <div class="book-page book-left" data-scroll-reveal>
+        <h2>Still becoming</h2>
+        <div class="book-text">
+          <p class="big-line">{story[10]}</p>
+          <p>{story[11]}</p>
+        </div>
+        <div class="baby-sticker wonder-buddy" data-face="wow" aria-hidden="true"><img src={withBase('/Images/baby/wow.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <span class="page-number">9</span>
+      </div>
+      <div class="book-page book-right page-sky last-page" data-scroll-reveal>
+        <div class="baby-sticker last-buddy" data-face="smile" aria-hidden="true"><img src={withBase('/Images/baby/smile.webp')} width="540" height="540" alt="" draggable="false" loading="lazy" /></div>
+        <div class="book-text"><p class="big-line">{story[12]}</p></div>
+        <p class="to-be-continued">to be continued...</p>
+        <span class="page-number">10</span>
+      </div>
+    </section>
+  </article>
+</main>

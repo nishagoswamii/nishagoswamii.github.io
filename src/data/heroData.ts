@@ -1,8 +1,9 @@
+import { withBase } from '@/lib/utils';
 export const heroData = {
   name: 'Nisha Goswami',
   title: 'AI - ML Engineer',
   description: 'Hi, I am Nisha Goswami, a Computer Engineering Student passionate about AI,  Machine Learning, and Creative projects.',
-  profilePicture: '/Images/profilePic.jpg',
+  profilePicture: withBase('/Images/profilePic.jpg'),
   skills: [
     'JavaScript',
     'HTML',
@@ -18,6 +19,6 @@ export const heroData = {
   contact: {
     github: 'https://github.com/nishagoswamii',
     linkedin: 'https://www.linkedin.com/in/nishagoswamii/overlay/about-this-profile/',
-    email: 'nishagoswami369@gmail.com'
+    email: 'hello@nishagoswami.com'
   }
 };
